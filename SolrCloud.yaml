@@ -1,0 +1,31 @@
+apiVersion: solr.apache.org/v1beta1
+kind: SolrCloud
+metadata:
+  name: example
+spec:
+  dataStorage:
+    ephemeral:
+      hostPath:
+        path: /opt
+  replicas: 2
+  solrImage:
+    tag: "8.8"
+  solrJavaMem: "-Xms1000m -Xmx1000m"
+  solrLogLevel: "WARN"
+  zookeeperRef:
+    provided:
+      replicas: 5
+  solrAddressability:
+    external:
+      method: Ingress
+      domainName: "mydomain.com"
+      useExternalAddress: true
+  customSolrKubeOptions:
+    podOptions:
+      resources:
+        limits:
+          cpu: 900m
+          memory: 5Gi
+        requests:
+          cpu: 700m
+          memory: 4Gi
